@@ -42,6 +42,10 @@ Route maps, safety indicators, lighting notes, and walking progress are illustra
 
 ## Publish on GitHub Pages
 
-The production web build is generated with `npm run build:web`. The repository includes a GitHub Actions workflow that deploys the `dist` folder to GitHub Pages whenever `main` is updated. The Expo `baseUrl` is set for the `MoodWalkApp` repository path, and `.nojekyll` is included so Expo assets are served correctly.
+The Expo web export is configured for the `MoodWalkApp` repository path (`/MoodWalkApp/`). To build the site and publish the generated `dist` folder to a `gh-pages` branch, run:
 
-Enable Pages with **Settings → Pages → Build and deployment → GitHub Actions**. After the workflow succeeds, the site will be available at `https://alanyana.github.io/MoodWalkApp/`.
+```bash
+npm run deploy
+```
+
+The `predeploy` script exports the web app before `gh-pages` publishes it. Then configure the repository in **Settings → Pages → Build and deployment** to **Deploy from a branch**, choose `gh-pages`, and select `/(root)`. The site will be available at `https://alanyana.github.io/MoodWalkApp/` after GitHub Pages finishes publishing.
