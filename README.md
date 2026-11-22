@@ -1,15 +1,15 @@
 # MoodWalk
 
-MoodWalk is an Expo and React Native prototype for mood-based walking recommendations. It uses sample Seoul routes and AsyncStorage so its main journey works without API credentials or live GPS.
+MoodWalk is a Vite, React, and TypeScript web app for mood-based walking recommendations. It uses sample Seoul routes and browser local storage so its main journey works without API credentials or live GPS.
 
 ## Start
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
-Open with Expo Go or a development build. Optional web preview: `npm run web`.
+Vite prints a local development URL after the server starts. Create a production bundle with `npm run build` and preview it locally with `npm run preview`.
 
 ## Demo flow
 
@@ -42,10 +42,10 @@ Route maps, safety indicators, lighting notes, and walking progress are illustra
 
 ## Publish on GitHub Pages
 
-The Expo web export is configured for the `MoodWalkApp` repository path (`/MoodWalkApp/`). To build the site and publish the generated `dist` folder to a `gh-pages` branch, run:
+Vite is configured for the `MoodWalkApp` repository path (`/MoodWalkApp/`). To build the site and publish the generated `dist` folder to a `gh-pages` branch, run:
 
 ```bash
 npm run deploy
 ```
 
-The `predeploy` script exports the web app before `gh-pages` publishes it. Then configure the repository in **Settings → Pages → Build and deployment** to **Deploy from a branch**, choose `gh-pages`, and select `/(root)`. The site will be available at `https://alanyana.github.io/MoodWalkApp/` after GitHub Pages finishes publishing.
+The `predeploy` script builds the web app before `gh-pages` publishes it. Git must be installed and available in your terminal for this command. Then configure the repository in **Settings → Pages → Build and deployment** to **Deploy from a branch**, choose `gh-pages`, and select `/(root)`. The site will be available at `https://alanyana.github.io/MoodWalkApp/` after GitHub Pages finishes publishing.
