@@ -17,7 +17,7 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "baseUrl": "/moodwalk"
+      "baseUrl": "/MoodWalkApp"
     },
     "web": {
       "output": "single"

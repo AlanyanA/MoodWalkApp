@@ -42,6 +42,6 @@ Route maps, safety indicators, lighting notes, and walking progress are illustra
 
 ## Publish on GitHub Pages
 
-The production web build is generated with `npm run build:web`. The repository includes a GitHub Actions workflow that deploys the `dist` folder to GitHub Pages whenever `main` is updated. The Expo `baseUrl` is set for the `moodwalk` repository path, and `.nojekyll` is included so Expo assets are served correctly.
+The production web build is generated with `npm run build:web`. The repository includes a GitHub Actions workflow that deploys the `dist` folder to GitHub Pages whenever `main` is updated. The Expo `baseUrl` is set for the `MoodWalkApp` repository path, and `.nojekyll` is included so Expo assets are served correctly.
 
-After creating the GitHub repository, enable Pages with **Settings → Pages → Build and deployment → GitHub Actions**. The site will then be available at `https://<your-github-username>.github.io/moodwalk/` after the workflow succeeds.
+Enable Pages with **Settings → Pages → Build and deployment → GitHub Actions**. After the workflow succeeds, the site will be available at `https://alanyana.github.io/MoodWalkApp/`.
