@@ -117,10 +117,10 @@ export default function MoodWalk() {
 
   if (!ready) return <SafeAreaView style={s.safe}><View style={s.loading}><View style={s.logoMark}><Ionicons name="leaf" size={24} color={C.white} /></View></View></SafeAreaView>;
 
-  if (screen === 'welcome') return <SafeAreaView style={s.safe}><View style={s.welcome}>
+  if (screen === 'welcome') return <SafeAreaView dataSet={{ mobile: 'app-safe-area' }} style={s.safe}><View dataSet={{ mobile: 'welcome-screen' }} style={s.welcome}>
     <View style={s.brand}><View style={s.logoMark}><Ionicons name="leaf" size={23} color={C.white} /></View><Text style={s.brandText}>moodwalk</Text></View>
-    <View style={s.welcomeArt}><ScenicArt /><View style={s.artPill}><Ionicons name="sparkles" size={15} color={C.dark} /><Text style={s.artPillText}>A little space for you</Text></View></View>
-    <View style={s.welcomeCopy}><Text style={s.eyebrow}>YOUR NEXT BREATH OF FRESH AIR</Text><Text style={s.hero}>A walk that{ '\n' }fits how you feel.</Text><Text style={s.body}>Tell us what you need today. We’ll find a nearby route that feels right for you.</Text>
+    <View dataSet={{ mobile: 'welcome-art' }} style={s.welcomeArt}><ScenicArt /><View style={s.artPill}><Ionicons name="sparkles" size={15} color={C.dark} /><Text style={s.artPillText}>A little space for you</Text></View></View>
+    <View dataSet={{ mobile: 'welcome-copy' }} style={s.welcomeCopy}><Text style={s.eyebrow}>YOUR NEXT BREATH OF FRESH AIR</Text><Text style={s.hero}>A walk that{ '\n' }fits how you feel.</Text><Text style={s.body}>Tell us what you need today. We’ll find a nearby route that feels right for you.</Text>
       <Button label="Find my kind of walk" icon="arrow-forward" onPress={begin} />
     </View>
   </View></SafeAreaView>;
@@ -138,12 +138,12 @@ export default function MoodWalk() {
     </View>
   </Pressable>;
 
-  const nav = <View style={s.tabBar}>{(['Discover', 'Explore', 'Saved', 'Profile'] as Tab[]).map(t => <Pressable key={t} onPress={() => goTab(t)} style={s.tabItem} accessibilityRole="tab" accessibilityState={{ selected: tab === t }}><Ionicons name={(t === 'Discover' ? 'leaf' : t === 'Explore' ? 'compass' : t === 'Saved' ? 'bookmark' : 'person-circle') as IconName} size={21} color={tab === t ? C.green : '#929A94'} /><Text style={[s.tabLabel, tab === t && s.tabLabelActive]}>{t}</Text>{tab === t && <View style={s.tabDot} />}</Pressable>)}</View>;
+  const nav = <View dataSet={{ mobile: 'mobile-tabbar' }} style={s.tabBar}>{(['Discover', 'Explore', 'Saved', 'Profile'] as Tab[]).map(t => <Pressable key={t} onPress={() => goTab(t)} style={s.tabItem} accessibilityRole="tab" accessibilityState={{ selected: tab === t }}><Ionicons name={(t === 'Discover' ? 'leaf' : t === 'Explore' ? 'compass' : t === 'Saved' ? 'bookmark' : 'person-circle') as IconName} size={21} color={tab === t ? C.green : '#929A94'} /><Text style={[s.tabLabel, tab === t && s.tabLabelActive]}>{t}</Text>{tab === t && <View style={s.tabDot} />}</Pressable>)}</View>;
 
   let content: React.ReactNode;
   if (screen === 'moods') content = <>
     {header('How do you want to feel?', 'Choose one to see a walk that fits.', () => setScreen('home'))}
-    <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
+    <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
       {moods.map(m => <Pressable key={m.label} onPress={() => { setMood(m.label); setScreen('preferences'); }} style={s.moodOption} accessibilityRole="button" accessibilityLabel={m.label}>
         <View style={[s.moodOptionIcon, { backgroundColor: m.color }]}><Ionicons name={m.icon} size={20} color={C.dark} /></View><View style={{ flex: 1 }}><Text style={s.moodOptionTitle}>{m.label}</Text></View><Ionicons name="chevron-forward" size={19} color={C.ink} />
       </Pressable>)}
@@ -151,68 +151,68 @@ export default function MoodWalk() {
   </>;
   else if (screen === 'preferences') content = <>
     {header('How much time do you have?', 'Pick a range for this walk.', () => setScreen('moods'))}
-    <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
+    <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
       <View style={s.contextCard}><View style={s.contextIcon}><Ionicons name="time-outline" size={21} color={C.dark} /></View><View style={{ flex: 1 }}><Text style={s.contextLabel}>WALKING TIME</Text><Text style={s.contextMood}>{time}</Text></View></View>
       <View style={s.choiceWrap}>{timeOptions.map(t => <Choice key={t} label={t} selected={time === t} onPress={() => setTime(t)} />)}</View>
-    </ScrollView><View style={s.bottomAction}><Button label="Continue" icon="arrow-forward" onPress={() => setScreen('priorities')} /></View>
+    </ScrollView><View dataSet={{ mobile: 'screen-action' }} style={s.bottomAction}><Button label="Continue" icon="arrow-forward" onPress={() => setScreen('priorities')} /></View>
   </>;
   else if (screen === 'priorities') content = <>
     {header('What matters on this walk?', 'Choose up to two route details.', () => setScreen('preferences'))}
-    <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
+    <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
       <View style={s.contextCard}><View style={s.contextIcon}><Ionicons name={moodIcon(mood)} size={21} color={C.dark} /></View><View style={{ flex: 1 }}><Text style={s.contextLabel}>YOUR WALK</Text><Text style={s.contextMood}>{mood} - {time}</Text></View></View>
       <View style={s.priorityList}>{environments.map(e => <Choice key={e} label={e} selected={environment.includes(e)} onPress={() => toggleEnvironment(e)} check />)}</View>
-    </ScrollView><View style={s.bottomAction}><Button label="Show 3 route options" icon="arrow-forward" onPress={() => setScreen('results')} /></View>
+    </ScrollView><View dataSet={{ mobile: 'screen-action' }} style={s.bottomAction}><Button label="Show 3 route options" icon="arrow-forward" onPress={() => setScreen('results')} /></View>
   </>;
   else if (screen === 'results') content = <>
     {header('A few walks for you', `Matched to ${mood.toLowerCase()} and ${time}.`, () => setScreen('priorities'))}
-    <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>{recommendations.map(r => routeCard(r))}{recommendations.length === 0 && <Empty icon="map-outline" title="No routes found" body="Try another time range or route preference." />}</ScrollView>
+    <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>{recommendations.map(r => routeCard(r))}{recommendations.length === 0 && <Empty icon="map-outline" title="No routes found" body="Try another time range or route preference." />}</ScrollView>
   </>;
   else if (screen === 'detail') content = <>
     <View style={s.detailMap}><LargeMap color={route.color} /><Pressable onPress={() => setScreen('results')} style={s.floatingBack}><Ionicons name="chevron-back" size={22} color={C.ink} /></Pressable><View style={s.mapCaption}><Ionicons name="location" size={14} color={C.dark} /><Text style={s.mapCaptionText}>Illustrative route · {route.area}</Text></View></View>
-    <ScrollView contentContainerStyle={s.detailBody} showsVerticalScrollIndicator={false}><View style={s.detailNameRow}><View style={{ flex: 1 }}><Text style={s.detailTitle}>{route.name}</Text><Text style={s.routeArea}>{route.area}</Text></View><Pressable onPress={() => toggleSaved(route.id)} style={s.saveAction} accessibilityRole="button" accessibilityLabel={store.saved.includes(route.id) ? 'Remove saved route' : 'Save route'}><Ionicons name={store.saved.includes(route.id) ? 'bookmark' : 'bookmark-outline'} size={18} color={C.green} /><Text style={s.saveActionText}>{store.saved.includes(route.id) ? 'Saved' : 'Save'}</Text></Pressable></View>
+    <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.detailBody} showsVerticalScrollIndicator={false}><View style={s.detailNameRow}><View style={{ flex: 1 }}><Text style={s.detailTitle}>{route.name}</Text><Text style={s.routeArea}>{route.area}</Text></View><Pressable onPress={() => toggleSaved(route.id)} style={s.saveAction} accessibilityRole="button" accessibilityLabel={store.saved.includes(route.id) ? 'Remove saved route' : 'Save route'}><Ionicons name={store.saved.includes(route.id) ? 'bookmark' : 'bookmark-outline'} size={18} color={C.green} /><Text style={s.saveActionText}>{store.saved.includes(route.id) ? 'Saved' : 'Save'}</Text></Pressable></View>
       <View style={s.detailMetrics}><Metric icon="time-outline" label={`${route.minutes} min`} /><Metric icon="walk-outline" label={`${route.km.toFixed(1)} km`} /><Metric icon="trending-up-outline" label={route.difficulty} /></View>
-      <Text style={s.detailDescription}>{route.description}</Text><View style={s.envGrid}><EnvCard label="Safety*" value={route.safety} max={5} icon="shield-checkmark-outline" /><EnvCard label="Greenery" value={route.green} max={5} icon="leaf-outline" /><EnvCard label="Crowds" value={route.crowd} max={5} icon="people-outline" /></View><Text style={s.sampleDisclosure}>SAMPLE ROUTE · Lighting: {route.lighting}</Text>
-    </ScrollView><View style={s.bottomAction}><Button label="Continue to music ideas" icon="arrow-forward" onPress={() => setScreen('music')} /></View>
+      <Text style={s.detailDescription}>{route.description}</Text><View dataSet={{ mobile: 'env-grid' }} style={s.envGrid}><EnvCard label="Safety*" value={route.safety} max={5} icon="shield-checkmark-outline" /><EnvCard label="Greenery" value={route.green} max={5} icon="leaf-outline" /><EnvCard label="Crowds" value={route.crowd} max={5} icon="people-outline" /></View><Text style={s.sampleDisclosure}>SAMPLE ROUTE · Lighting: {route.lighting}</Text>
+    </ScrollView><View dataSet={{ mobile: 'screen-action' }} style={s.bottomAction}><Button label="Continue to music ideas" icon="arrow-forward" onPress={() => setScreen('music')} /></View>
   </>;
   else if (screen === 'music') content = <>
     {header('Music for this walk', `Optional listening ideas for ${mood.toLowerCase()}.`, () => setScreen('detail'))}
-    <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
+    <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
       <View style={s.musicIntro}><View style={s.musicIntroIcon}><Ionicons name="headset-outline" size={23} color={C.dark} /></View><Text style={s.musicIntroTitle}>{route.name}</Text><Text style={s.sampleDisclosure}>LISTENING IDEAS · NO AUDIO PLAYS</Text></View>
       {musicIdeas[mood].map((idea, index) => <Pressable key={idea} onPress={() => setSelectedMusic(idea)} style={[s.musicChoice, selectedMusic === idea && s.musicChoiceSelected]} accessibilityRole="radio" accessibilityState={{ selected: selectedMusic === idea }} accessibilityLabel={`${idea}${selectedMusic === idea ? ', selected' : ''}`}>
         <View style={[s.musicChoiceIcon, index === 1 && s.musicChoiceIconWarm]}><Ionicons name={index === 0 ? 'musical-notes-outline' : index === 1 ? 'cloud-outline' : 'leaf-outline'} size={20} color={C.dark} /></View><View style={{ flex: 1 }}><Text style={s.musicChoiceTitle}>{idea}</Text></View><Ionicons name={selectedMusic === idea ? 'checkmark-circle' : 'ellipse-outline'} size={21} color={selectedMusic === idea ? C.green : '#A8B0A9'} />
       </Pressable>)}
-    </ScrollView><View style={s.bottomAction}><Button label="Start this walk" icon="walk" onPress={startWalk} /></View>
+    </ScrollView><View dataSet={{ mobile: 'screen-action' }} style={s.bottomAction}><Button label="Start this walk" icon="walk" onPress={startWalk} /></View>
   </>;
   else if (screen === 'walking') content = <>
-    <View style={s.walkTop}><View style={{ width: 42 }} /><Text style={s.walkModeLabel}>YOUR WALK</Text><View style={{ width: 42 }} /></View>
-    <View style={s.walkMap}><LargeMap color={route.color} active /><View style={s.nextTurn}><View style={s.turnIcon}><Ionicons name="arrow-forward" size={21} color={C.white} /></View><View><Text style={s.turnKicker}>NEXT</Text><Text style={s.turnTitle}>Continue along the garden path</Text></View></View></View>
-    <View style={s.walkStats}><Text style={s.walkRoute}>{route.name}</Text><Text style={s.sampleDisclosure}>DEMO WALK · PROGRESS IS AN ESTIMATE</Text><View style={s.walkNumbers}><View><Text style={s.walkNumber}>{route.km.toFixed(1)}</Text><Text style={s.walkUnit}>km total</Text></View><View style={s.statDivider} /><View><Text style={s.walkNumber}>{Math.max(0, route.minutes - Math.floor(elapsed / 60))}</Text><Text style={s.walkUnit}>min left</Text></View><View style={s.statDivider} /><View><Text style={s.walkNumber}>{String(Math.floor(elapsed / 60)).padStart(2, '0')}:{String(elapsed % 60).padStart(2, '0')}</Text><Text style={s.walkUnit}>elapsed</Text></View></View><View style={s.progressTrack}><View style={[s.progressFill, { width: `${Math.min(95, 8 + Math.floor(elapsed / 20))}%` }]} /></View>
-      <View style={s.awareness}><Ionicons name="eye-outline" size={18} color={C.dark} /><Text style={s.awarenessText}>Keep your eyes on your surroundings, not your screen.</Text></View><View style={s.walkActions}><Pressable onPress={() => setPaused(p => !p)} style={s.pauseButton}><Ionicons name={paused ? 'play' : 'pause'} size={20} color={C.dark} /><Text style={s.pauseText}>{paused ? 'Resume' : 'Pause'}</Text></Pressable><Button label="Finish walk" icon="checkmark" onPress={finishWalk} small /></View>
+    <View dataSet={{ mobile: 'walk-top' }} style={s.walkTop}><View style={{ width: 42 }} /><Text style={s.walkModeLabel}>YOUR WALK</Text><View style={{ width: 42 }} /></View>
+    <View dataSet={{ mobile: 'walk-map' }} style={s.walkMap}><LargeMap color={route.color} active /><View style={s.nextTurn}><View style={s.turnIcon}><Ionicons name="arrow-forward" size={21} color={C.white} /></View><View><Text style={s.turnKicker}>NEXT</Text><Text style={s.turnTitle}>Continue along the garden path</Text></View></View></View>
+    <View dataSet={{ mobile: 'walk-stats' }} style={s.walkStats}><Text dataSet={{ mobile: 'walk-route' }} style={s.walkRoute}>{route.name}</Text><Text dataSet={{ mobile: 'walk-disclosure' }} style={s.sampleDisclosure}>DEMO WALK · PROGRESS IS AN ESTIMATE</Text><View dataSet={{ mobile: 'walk-numbers' }} style={s.walkNumbers}><View><Text style={s.walkNumber}>{route.km.toFixed(1)}</Text><Text style={s.walkUnit}>km total</Text></View><View style={s.statDivider} /><View><Text style={s.walkNumber}>{Math.max(0, route.minutes - Math.floor(elapsed / 60))}</Text><Text style={s.walkUnit}>min left</Text></View><View style={s.statDivider} /><View><Text style={s.walkNumber}>{String(Math.floor(elapsed / 60)).padStart(2, '0')}:{String(elapsed % 60).padStart(2, '0')}</Text><Text style={s.walkUnit}>elapsed</Text></View></View><View style={s.progressTrack}><View style={[s.progressFill, { width: `${Math.min(95, 8 + Math.floor(elapsed / 20))}%` }]} /></View>
+      <View dataSet={{ mobile: 'walk-awareness' }} style={s.awareness}><Ionicons name="eye-outline" size={18} color={C.dark} /><Text style={s.awarenessText}>Keep your eyes on your surroundings, not your screen.</Text></View><View dataSet={{ mobile: 'walk-actions' }} style={s.walkActions}><Pressable onPress={() => setPaused(p => !p)} style={s.pauseButton}><Ionicons name={paused ? 'play' : 'pause'} size={20} color={C.dark} /><Text style={s.pauseText}>{paused ? 'Resume' : 'Pause'}</Text></Pressable><Button label="Finish walk" icon="checkmark" onPress={finishWalk} small /></View>
     </View>
   </>;
-  else if (screen === 'complete') content = <View style={s.completeScreen}><View style={s.completeArt}><ScenicArt compact /><View style={s.confetti}><Ionicons name="sparkles" size={24} color={C.orange} /></View></View><Text style={s.eyebrow}>A MOMENT WELL SPENT</Text><Text style={s.completeTitle}>Nice work.{ '\n' }You showed up for you.</Text><Text style={s.body}>A short walk is still a real step toward feeling a little better.</Text><View style={s.completionStats}><Metric icon="walk-outline" label={`${route.km.toFixed(1)} km`} /><Metric icon="time-outline" label={`${Math.max(1, Math.round(elapsed / 60) || route.minutes)} min`} /><Metric icon={moodIcon(mood)} label={mood} /></View><Button label="Quick feeling check-in" icon="chatbubble-ellipses-outline" onPress={() => setScreen('feedback')} /><Pressable style={s.textButton} onPress={() => { setScreen('home'); setTab('Discover'); }}><Text style={s.textButtonLabel}>Skip for now</Text></Pressable></View>;
+  else if (screen === 'complete') content = <View dataSet={{ mobile: 'complete-screen' }} style={s.completeScreen}><View style={s.completeArt}><ScenicArt compact /><View style={s.confetti}><Ionicons name="sparkles" size={24} color={C.orange} /></View></View><Text style={s.eyebrow}>A MOMENT WELL SPENT</Text><Text style={s.completeTitle}>Nice work.{ '\n' }You showed up for you.</Text><Text style={s.body}>A short walk is still a real step toward feeling a little better.</Text><View style={s.completionStats}><Metric icon="walk-outline" label={`${route.km.toFixed(1)} km`} /><Metric icon="time-outline" label={`${Math.max(1, Math.round(elapsed / 60) || route.minutes)} min`} /><Metric icon={moodIcon(mood)} label={mood} /></View><Button label="Quick feeling check-in" icon="chatbubble-ellipses-outline" onPress={() => setScreen('feedback')} /><Pressable style={s.textButton} onPress={() => { setScreen('home'); setTab('Discover'); }}><Text style={s.textButtonLabel}>Skip for now</Text></Pressable></View>;
   else if (screen === 'feedback') content = <>
     {header('How did that walk feel?', 'One quick tap helps tune future suggestions.', () => setScreen('complete'))}
-    <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
+    <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>
       <View style={s.feedbackRoute}><View style={s.feedbackThumb}><MiniMap color={route.color} /></View><View style={{ flex: 1 }}><Text style={s.feedbackRouteName}>{route.name}</Text><Text style={s.routeArea}>{route.area}</Text></View></View>
       <View style={s.feedbackOptions}>{['Much better', 'A little better', 'About the same', 'More stressed', 'More tired'].map(x => <Pressable key={x} onPress={() => submitFeedback(x)} style={s.feelingChoice} accessibilityRole="button"><Text style={s.feelingChoiceText}>{x}</Text><Ionicons name="chevron-forward" size={17} color={C.green} /></Pressable>)}</View>
-    </ScrollView><View style={s.bottomAction}><Pressable onPress={() => { setScreen('home'); setTab('Discover'); }} style={s.skipButton}><Text style={s.skipLabel}>Skip this time</Text></Pressable></View>
+    </ScrollView><View dataSet={{ mobile: 'screen-action' }} style={s.bottomAction}><Pressable onPress={() => { setScreen('home'); setTab('Discover'); }} style={s.skipButton}><Text style={s.skipLabel}>Skip this time</Text></Pressable></View>
   </>;
   else if (tab === 'Explore') {
     const filtered = routeData.filter(r => `${r.name} ${r.area} ${r.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase()));
     content = <>{header('Explore nearby', 'Browse a route at your own pace.')}
       <View style={s.searchBox}><Ionicons name="search-outline" size={19} color={C.muted} /><TextInput value={query} onChangeText={setQuery} placeholder="Search routes or places" placeholderTextColor="#909A93" style={s.searchInput} /></View>
-      <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>{filtered.map(r => routeCard(r, true))}{filtered.length === 0 && <Empty icon="search-outline" title="No matching routes" body="Try another place or route name." />}</ScrollView>
+      <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>{filtered.map(r => routeCard(r, true))}{filtered.length === 0 && <Empty icon="search-outline" title="No matching routes" body="Try another place or route name." />}</ScrollView>
     </>;
   } else if (tab === 'Saved') {
     const saved = routeData.filter(r => store.saved.includes(r.id));
     content = <>{header('Saved for later', saved.length ? `${saved.length} route${saved.length === 1 ? '' : 's'} you can come back to.` : 'Keep a route close for another day.')}
-      <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>{saved.map(r => routeCard(r, true))}{!saved.length && <Empty icon="bookmark-outline" title="Your saved routes live here" body="Tap the bookmark on any route to keep it handy." />}</ScrollView>
+      <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}>{saved.map(r => routeCard(r, true))}{!saved.length && <Empty icon="bookmark-outline" title="Your saved routes live here" body="Tap the bookmark on any route to keep it handy." />}</ScrollView>
     </>;
   } else if (tab === 'Profile') {
     const totalKm = store.walks.reduce((sum, w) => sum + w.km, 0); const totalMin = store.walks.reduce((sum, w) => sum + w.minutes, 0);
     content = <>{header('Your walking space', 'A gentle record of the time you made for yourself.')}
-      <ScrollView contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}><View style={s.profileCard}><View style={s.avatar}><Ionicons name="person" size={28} color={C.dark} /></View><View style={{ flex: 1 }}><Text style={s.profileName}>A little more outside</Text></View><Ionicons name="leaf-outline" size={24} color={C.green} /></View>
+      <ScrollView dataSet={{ mobile: 'screen-scroll' }} contentContainerStyle={s.scrollContent} showsVerticalScrollIndicator={false}><View style={s.profileCard}><View style={s.avatar}><Ionicons name="person" size={28} color={C.dark} /></View><View style={{ flex: 1 }}><Text style={s.profileName}>A little more outside</Text></View><Ionicons name="leaf-outline" size={24} color={C.green} /></View>
         <View style={s.statsCard}><View style={s.profileStat}><Text style={s.profileStatNum}>{store.walks.length}</Text><Text style={s.profileStatLabel}>walks</Text></View><View style={s.statDivider} /><View style={s.profileStat}><Text style={s.profileStatNum}>{totalKm.toFixed(1)}</Text><Text style={s.profileStatLabel}>kilometers</Text></View><View style={s.statDivider} /><View style={s.profileStat}><Text style={s.profileStatNum}>{totalMin}</Text><Text style={s.profileStatLabel}>minutes</Text></View></View>
         <View style={s.profileSectionHeader}><Text style={s.sectionTitle}>Recent walks</Text></View>
         {store.walks.slice(0, 5).map((w, i) => { const r = routeData.find(x => x.id === w.routeId); return <View style={s.historyRow} key={`${w.date}-${i}`}><View style={[s.historyIcon, { backgroundColor: r?.color ?? C.sage }]}><Ionicons name="walk-outline" size={19} color={C.dark} /></View><View style={{ flex: 1 }}><Text style={s.historyName}>{r?.name ?? 'A walk'}</Text><Text style={s.routeArea}>{new Date(w.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} · {w.mood}</Text></View><Text style={s.historyKm}>{w.km.toFixed(1)} km</Text></View>; })}
@@ -225,18 +225,18 @@ export default function MoodWalk() {
   } else {
     content = <>
       <View style={s.homeHeader}><View style={s.brand}><View style={[s.logoMark, s.logoSmall]}><Ionicons name="leaf" size={17} color={C.white} /></View><Text style={s.brandText}>moodwalk</Text></View></View>
-      <View style={s.discoverStart}>
-        <View style={s.discoverIllustration}><ScenicArt compact /><View style={s.discoverSpark}><Ionicons name="sparkles" size={22} color={C.dark} /></View><View style={s.discoverMoodOrb}><Ionicons name="heart" size={23} color={C.dark} /></View></View>
+      <View dataSet={{ mobile: 'discover-start' }} style={s.discoverStart}>
+        <View dataSet={{ mobile: 'discover-illustration' }} style={s.discoverIllustration}><ScenicArt compact /><View style={s.discoverSpark}><Ionicons name="sparkles" size={22} color={C.dark} /></View><View style={s.discoverMoodOrb}><Ionicons name="heart" size={23} color={C.dark} /></View></View>
         <Text style={s.discoverEyebrow}>A WALK THAT MEETS YOU HERE</Text>
-        <Text style={s.discoverTitle}>What is your mood asking for today?</Text>
+        <Text dataSet={{ mobile: 'discover-title' }} style={s.discoverTitle}>What is your mood asking for today?</Text>
         <Button label="Choose a mood" icon="arrow-forward" onPress={() => setScreen('moods')} />
       </View>
     </>;
   }
 
-  return <SafeAreaView style={s.safe}><View style={s.appShell}>
-    <View style={{ flex: 1 }}>{content}</View>
-    {['walking', 'complete', 'feedback', 'detail', 'music', 'moods', 'preferences', 'priorities', 'results'].includes(screen) ? null : nav}
+  return <SafeAreaView dataSet={{ mobile: 'app-safe-area' }} style={s.safe}><View dataSet={{ mobile: 'app-shell', screen: screen === 'walking' ? 'walking' : 'normal' }} style={s.appShell}>
+    <View dataSet={{ mobile: 'app-screen' }} style={{ flex: 1, minHeight: 0 }}>{content}</View>
+    {['walking', 'complete', 'feedback', 'detail', 'music', 'moods', 'preferences', 'priorities', 'results'].includes(screen) ? null : <View dataSet={{ mobile: 'mobile-tabbar-wrap' }}>{nav}</View>}
   </View></SafeAreaView>;
 }
 
